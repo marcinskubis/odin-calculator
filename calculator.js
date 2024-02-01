@@ -36,27 +36,27 @@ function performCalculation(newOperation){
     // console.log("current value: " + input.value);
     if(currentOperation && !operationPressed){
         let result;
-        switch(currentOperation){
-            case 'div':
-                result = div(Number.parseFloat(previousValue), Number.parseFloat(input.value));
-                //return div(a, b);
-                break;
-            case 'mul':
-                result = mul(Number.parseFloat(previousValue), Number.parseFloat(input.value));
-                //return mul(a, b);
-                break;
-            case 'add':
-                result = add(Number.parseFloat(previousValue), Number.parseFloat(input.value));
-                break;
-            case 'sub':
-                result = sub(Number.parseFloat(previousValue), Number.parseFloat(input.value));
-                break;
-            case 'equ':
-                equ();
-                break;
-            case 'percent':
-                result = percent(Number.parseFloat(previousValue), Number.parseFloat(input.value));
-                break;
+        if(newOperation === 'percent') result = percent(Number.parseFloat(previousValue), Number.parseFloat(input.value));
+        else{
+            switch(currentOperation){
+                case 'div':
+                    result = div(Number.parseFloat(previousValue), Number.parseFloat(input.value));
+                    //return div(a, b);
+                    break;
+                case 'mul':
+                    result = mul(Number.parseFloat(previousValue), Number.parseFloat(input.value));
+                    //return mul(a, b);
+                    break;
+                case 'add':
+                    result = add(Number.parseFloat(previousValue), Number.parseFloat(input.value));
+                    break;
+                case 'sub':
+                    result = sub(Number.parseFloat(previousValue), Number.parseFloat(input.value));
+                    break;
+                case 'equ':
+                    equ();
+                    break;
+            }
         }
         if (!isNaN(result)) {
             let beforeDecimalCount = 0;
@@ -68,7 +68,7 @@ function performCalculation(newOperation){
             input.value = beforeDecimalCount > 0 ? result.toFixed(7 - beforeDecimalCount) : result;
         }
         previousValue = input.value;
-        currentOperation = newOperation;
+        if(currentOperation !== 'percent') currentOperation = newOperation;
         operationPressed = true;
     }
     else{
@@ -114,7 +114,24 @@ function equ() {
 
 //Percent function
 function percent(a, b){
-    return a * b/100;
+    let result;
+    switch(currentOperation){
+        case 'div':
+            result = div(a, b/100);
+            break;
+        case 'mul':
+            result = mul(a, b/100);
+            break;
+        case 'add':
+            result = add(a, b/100);
+            break;
+        case 'sub':
+            result = sub(a, b/100);
+            break;
+    }
+    console.log('result: ' + result);
+    currentOperation = null;
+    return result;
 }
 
 function clearInput(){
