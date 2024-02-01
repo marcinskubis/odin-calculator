@@ -29,11 +29,11 @@ operationButtons.forEach((button) => {
 dashButton.addEventListener('click', addFloatingPoint);
 
 function performCalculation(newOperation){
-    console.log("before");
-    console.log("new operation: " + newOperation);
-    console.log("current operation: " + currentOperation);
-    console.log("previous value: " + previousValue);
-    console.log("current value: " + input.value);
+    // console.log("before");
+    // console.log("new operation: " + newOperation);
+    // console.log("current operation: " + currentOperation);
+    // console.log("previous value: " + previousValue);
+    // console.log("current value: " + input.value);
     if(currentOperation && !operationPressed){
         let result;
         switch(currentOperation){
@@ -64,7 +64,8 @@ function performCalculation(newOperation){
             if(index !== -1){
                 beforeDecimalCount = result.toString().substring(0, index).length;
             }
-            input.value = result.toFixed(7 - beforeDecimalCount);
+            console.log(beforeDecimalCount);
+            input.value = beforeDecimalCount > 0 ? result.toFixed(7 - beforeDecimalCount) : result;
         }
         previousValue = input.value;
         currentOperation = newOperation;
@@ -75,12 +76,12 @@ function performCalculation(newOperation){
         operationPressed = true;
         previousValue = input.value;
     }
-    console.log("   ");
-    console.log("after");
-    console.log("new operation: " + newOperation);
-    console.log("current operation: " + currentOperation);
-    console.log("previous value: " + previousValue);
-    console.log("current value: " + input.value);
+    // console.log("   ");
+    // console.log("after");
+    // console.log("new operation: " + newOperation);
+    // console.log("current operation: " + currentOperation);
+    // console.log("previous value: " + previousValue);
+    // console.log("current value: " + input.value);
 }
 //functions
 // Addition function
